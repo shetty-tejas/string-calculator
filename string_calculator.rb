@@ -11,7 +11,7 @@ module StringCalculator
     private
 
     def handle_input(str)
-      numbers = str.split(',').map(&:to_i)
+      numbers = str.split(/\n|,/).map(&:to_i)
       return [0] if numbers.size.zero?
 
       return numbers

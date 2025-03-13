@@ -24,4 +24,9 @@ class TestStringCalculator < Minitest::Test
   def test_argument_has_hundred_integers
     assert_equal @described_class.add((1..100).to_a.join(',')), 5050
   end
+
+  def test_argument_has_new_lines_and_still_works
+    assert_equal @described_class.add("0\n,1,2,3\n\n4"), 10
+    assert_equal @described_class.add("1\n2\n3\n"), 6
+  end
 end
