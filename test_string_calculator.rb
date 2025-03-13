@@ -29,4 +29,15 @@ class TestStringCalculator < Minitest::Test
     assert_equal @described_class.add("0\n,1,2,3\n\n4"), 10
     assert_equal @described_class.add("1\n2\n3\n"), 6
   end
+
+  def test_argument_has_custom_delimiters
+    assert_equal @described_class.add("//;\n0;1\n2;3;4\n"), 10
+    assert_equal @described_class.add("//***\n0***1***2***3***\n4***\n***5"), 15
+  end
+
+  def test_argument_cannot_have_negative_integers
+    assert_raises(ArgumentError, "negative numbers not allowed -1,-2,-3") { @described_class.add("0,-1\n-2\n,-3,4,5") }
+    assert_raises(ArgumentError, "negative numbers not allowed -1") { @described_class.add("//;\n0;-1\n2;3;4\n") }
+    assert_raises(ArgumentError, "negative numbers not allowed -1,-4,-5") { @described_class.add("//***\n0***-1***2***3***\n-4***\n***-5")}
+  end
 end
