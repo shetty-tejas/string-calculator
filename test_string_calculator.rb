@@ -38,6 +38,12 @@ class TestStringCalculator < Minitest::Test
   def test_argument_cannot_have_negative_integers
     assert_raises(ArgumentError, "negative numbers not allowed -1,-2,-3") { @described_class.add("0,-1\n-2\n,-3,4,5") }
     assert_raises(ArgumentError, "negative numbers not allowed -1") { @described_class.add("//;\n0;-1\n2;3;4\n") }
-    assert_raises(ArgumentError, "negative numbers not allowed -1,-4,-5") { @described_class.add("//***\n0***-1***2***3***\n-4***\n***-5")}
+    assert_raises(ArgumentError, "negative numbers not allowed -1,-4,-5") { @described_class.add("//***\n0***-1***2***3***\n-4***\n***-5") }
+  end
+
+  def test_argument_has_multiple_delimiters
+    assert_raises(ArgumentError, "unidentified delimiters found") { @described_class.add("1,2+3") }
+    assert_raises(ArgumentError, "unidentified delimiters found") { @described_class.add("//;\n0,1;2;3;4") }
+    assert_raises(ArgumentError, "unidentified delimiters found") { @described_class.add("//***\n0***-1***2*&*3***\n-4***-5") }
   end
 end

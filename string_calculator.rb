@@ -16,11 +16,17 @@ module StringCalculator
 
       separators = ["\n", (result[:delimiter] || ',')].map { |d| Regexp.escape(d) }.join('|')
      
-      numbers = result[:numbers].split(/#{separators}/).map(&:to_i)
+      numbers = result[:numbers].split(/#{separators}/).reject(&:empty?)
+
+      unless numbers.all? { |n| n.match?(/\A-?\d+\z/) }
+        raise ArgumentError, "unidentified delimiters found"
+      end
+
+      numbers = numbers.map(&:to_i)
 
       unless (negatives = numbers.select(&:negative?)).length.zero?
         raise ArgumentError, "negative numbers not allowed #{negatives.join(',')}"
-      end
+      end  
       
       return [0] if numbers.size.zero?
 
