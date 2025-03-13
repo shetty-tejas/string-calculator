@@ -10,4 +10,14 @@ class TestStringCalculator < Minitest::Test
     assert_raises(ArgumentError) { @described_class.add(1) }
     assert_equal @described_class.add(""), 0
   end
+
+  def test_argument_has_one_integer
+    assert_equal @described_class.add("0"), 0
+    assert_equal @described_class.add("1"), 1
+  end
+
+  def test_argument_has_two_integers
+    assert_equal @described_class.add("0,1"), 1
+    assert_equal @described_class.add("1,2"), 3
+  end
 end
