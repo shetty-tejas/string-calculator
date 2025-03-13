@@ -20,4 +20,8 @@ class TestStringCalculator < Minitest::Test
     assert_equal @described_class.add("0,1"), 1
     assert_equal @described_class.add("1,2"), 3
   end
+
+  def test_argument_has_hundred_integers
+    assert_equal @described_class.add((1..100).to_a.join(',')), 5050
+  end
 end
